@@ -5,6 +5,7 @@ class User extends Component {
   state = {
     user: null,
   };
+
   componentDidMount() {
     fetchUser(this.props.id).then((user) =>
       this.setState({
@@ -12,6 +13,17 @@ class User extends Component {
       })
     );
   }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.id !== prevProps.id) {
+      fetchUser(this.props.id).then((user) =>
+        this.setState({
+          user,
+        })
+      );
+    }
+  }
+
   render() {
     return this.state.user === null ? (
       <p>Loading ...</p>
